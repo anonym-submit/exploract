@@ -1,0 +1,7 @@
+*.pickle
+*.pt
+*.eps
+*.png
+*.slurm
+*.out
+__pycache__
