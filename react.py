@@ -25,21 +25,21 @@ from mtree import MTree
 from sklearn.neighbors import BallTree
 import zss
 
-data_path = '/data/gpfs/projects/punim2258'
+
 
 repo = Repository('./session_repositories/actions.tsv','./session_repositories/displays.tsv','./raw_datasets/')
 
 
-with open(f'{data_path}/network_data/edge/act_five_feats.pickle', 'rb') as fin:
+with open(f'./edge/act_five_feats.pickle', 'rb') as fin:
     act_feats = pickle.load(fin)
 
-with open(f'{data_path}/network_data/edge/col_action.pickle', 'rb') as fin:
+with open(f'./edge/col_action.pickle', 'rb') as fin:
     col_feats = pickle.load(fin)
 
-with open(f'{data_path}/network_data/display_feats/display_feats.pickle', 'rb') as fin:
+with open(f'./display_feats/display_feats.pickle', 'rb') as fin:
     display_feats = pickle.load(fin)
 
-with open(f'{data_path}/network_data/display_feats/display_pca_feats.pickle', 'rb') as fin:
+with open(f'./display_feats/display_pca_feats.pickle', 'rb') as fin:
     display_pca_feats = pickle.load(fin)
 
 together_feats = {}
@@ -351,18 +351,12 @@ def node_del_cost(node):
 
 def node_update_cost(node1, node2):
     if node1.get_type() == node2.get_type():
-        # return np.linalg.norm(node1.get_x() - node2.get_x()) / math.sqrt(len(node2.get_x()))
         if node1.get_type() == 'display':
             return repo.display_distance(node1.get_id(), node2.get_id())
         elif node1.get_type() == 'action':
             return repo.action_distance(node1.get_id(), node2.get_id())
     else:
-        # return 2.0 * math.sqrt(max(len(node2.get_x()), len(node1.get_x())))
-        return 2.0
-
-    # return np.linalg.norm(node1['x'] - node2['x'])
-    # return repo.display_distance(node1['display_id'], node2['display_id'])
-    # return repo.action_distance(edge1['aid'], edge2['aid'])
+        return 2.0 #non-simillar nodes account for deletion and insertion
     
 
 
@@ -455,9 +449,9 @@ size = int(sys.argv[2])
 raw_tid = int(sys.argv[3])
 tid = [raw_tid]
 
-chunked_sessions = pickle.load(open(f'{data_path}/network_data/chunked_sessions/unbiased_seed_{seed}.pickle', 'rb'))
+chunked_sessions = pickle.load(open(f'./chunked_sessions/unbiased_seed_{seed}.pickle', 'rb'))
 
-# if os.path.isfile(f'{data_path}/network_data/chunk_ted_results/{seed}_{size}_{tid}_unbiased.pickle'):
+# if os.path.isfile(f'./chunk_ted_results/{seed}_{size}_{tid}_unbiased.pickle'):
 #     sys.exit("Already exists.")
 
 # display_pca_feats = generate_display_features(tid)
@@ -473,7 +467,7 @@ train_g_og, train_y_og, test_g_og, test_y_og = treefy_sessions(
 
 # test_g, val_g, test_y, val_y = train_test_split(test_g, test_y, test_size=0.30, random_state=seed)
 
-kf_splits = pickle.load(open(f'{data_path}/network_data/chunked_sessions/unbiased_kf_splits_seed_{seed}_{size}_{raw_tid}.pickle', 'rb'))
+kf_splits = pickle.load(open(f'./chunked_sessions/unbiased_kf_splits_seed_{seed}_{size}_{raw_tid}.pickle', 'rb'))
 
 k_mid = int(math.ceil(math.sqrt(len(train_g_og))))
 k_start = int(math.floor(k_mid - (k_mid / 2)))
@@ -621,7 +615,7 @@ print('seed =', seed, 'size =', size, 'tid =', tid)
 
 pickle.dump(
     {'ra3':ra3_accs, 'mrr':mrr_accs}, 
-    open(f'{data_path}/network_data/chunk_ted_results/{seed}_{size}_{tid}_unbiased.pickle', 'wb'), 
+    open(f'./chunk_ted_results/{seed}_{size}_{tid}_unbiased.pickle', 'wb'), 
     protocol=pickle.HIGHEST_PROTOCOL
 )
 

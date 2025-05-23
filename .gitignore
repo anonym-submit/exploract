@@ -1,4 +1,7 @@
-*.pickle
+chunk_ted_results/*.pickle
+chunked_sessions/*.pickle
+dst_probs/*.pickle
+model_stats/*.pickle
 *.pt
 *.eps
 *.png

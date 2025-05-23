@@ -17,24 +17,24 @@ from torch_geometric.loader import DataLoader
 from torch_geometric.utils.convert import from_networkx
 from torch_geometric.data import Dataset
 
-data_path = '/data/gpfs/projects/punim2258'
+
 
 # %%
 repo = Repository('./session_repositories/actions.tsv','./session_repositories/displays.tsv','./raw_datasets/')
 
-with open(f'{data_path}/network_data/edge/act_five_feats.pickle', 'rb') as fin:
+with open(f'./edge/act_five_feats.pickle', 'rb') as fin:
     act_feats = pickle.load(fin)
 
-with open(f'{data_path}/network_data/edge/col_action.pickle', 'rb') as fin:
+with open(f'./edge/col_action.pickle', 'rb') as fin:
     col_feats = pickle.load(fin)
 
-with open(f'{data_path}/network_data/edge/cond_action.pickle', 'rb') as fin:
+with open(f'./edge/cond_action.pickle', 'rb') as fin:
     cond_feats = pickle.load(fin)
 
-with open(f'{data_path}/network_data/display_feats/display_feats.pickle', 'rb') as fin:
+with open(f'./display_feats/display_feats.pickle', 'rb') as fin:
     display_feats = pickle.load(fin)
 
-with open(f'{data_path}/network_data/display_feats/display_pca_feats_{9999}.pickle', 'rb') as fin:
+with open(f'./display_feats/display_pca_feats_{9999}.pickle', 'rb') as fin:
     display_pca_feats = pickle.load(fin)
 
 actcol_feats = {}
@@ -710,7 +710,7 @@ tar_feats = actcol_feats
 test_id = [4]
 trids = [[0], [0,1], [0,1,2], [0,1,2,3]]
 
-with open(f'{data_path}/network_data/chunked_sessions/unbiased_seed_{seed}.pickle', 'rb') as fin:
+with open(f'./chunked_sessions/unbiased_seed_{seed}.pickle', 'rb') as fin:
     chunked_sessions = pickle.load(fin)
 
 min_size = 1
@@ -794,7 +794,7 @@ for trid in trids:
     
 pickle.dump(
     {'log_sizes': log_size, 'avgs':avgs, 'stdevs':stdevs}, 
-    open(f'{data_path}/network_data/model_stats/{seed}_{main_size}_gine_seq_logtime.pickle', 'wb'), 
+    open(f'./model_stats/{seed}_{main_size}_gine_seq_logtime.pickle', 'wb'), 
     protocol=pickle.HIGHEST_PROTOCOL
 )  
     

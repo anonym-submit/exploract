@@ -13,21 +13,21 @@ from lib.utilities import Repository
 from sklearn.neighbors import BallTree
 import zss
 
-data_path = '/data/gpfs/projects/punim2258'
+
 
 repo = Repository('./session_repositories/actions.tsv','./session_repositories/displays.tsv','./raw_datasets/')
 
 
-with open(f'{data_path}/network_data/edge/act_five_feats.pickle', 'rb') as fin:
+with open(f'./edge/act_five_feats.pickle', 'rb') as fin:
     act_feats = pickle.load(fin)
 
-with open(f'{data_path}/network_data/edge/col_action.pickle', 'rb') as fin:
+with open(f'./edge/col_action.pickle', 'rb') as fin:
     col_feats = pickle.load(fin)
 
-with open(f'{data_path}/network_data/display_feats/display_feats.pickle', 'rb') as fin:
+with open(f'./display_feats/display_feats.pickle', 'rb') as fin:
     display_feats = pickle.load(fin)
 
-with open(f'{data_path}/network_data/display_feats/display_pca_feats.pickle', 'rb') as fin:
+with open(f'./display_feats/display_pca_feats.pickle', 'rb') as fin:
     display_pca_feats = pickle.load(fin)
 
 together_feats = {}
@@ -330,29 +330,19 @@ def generate_graphs(repo, d_feats, a_feats, tar, size, test_project):
 
 
 def node_ins_cost(node):
-    # return math.sqrt(len(node.get_x()))
     return 1.0
 
 def node_del_cost(node):
-    # return math.sqrt(len(node.get_x()))
     return 1.0
 
 def node_update_cost(node1, node2):
     if node1.get_type() == node2.get_type():
-        # return np.linalg.norm(node1.get_x() - node2.get_x()) / math.sqrt(len(node2.get_x()))
         if node1.get_type() == 'display':
             return repo.display_distance(node1.get_id(), node2.get_id())
         elif node1.get_type() == 'action':
             return repo.action_distance(node1.get_id(), node2.get_id())
     else:
-        # return 2.0 * math.sqrt(max(len(node2.get_x()), len(node1.get_x())))
-        return 2.0
-
-    # return np.linalg.norm(node1['x'] - node2['x'])
-    # return repo.display_distance(node1['display_id'], node2['display_id'])
-    # return repo.action_distance(edge1['aid'], edge2['aid'])
-    
-
+        return 2.0 #non-simillar nodes account for deletion and insertion
 
 def calculate_ted(g1_index, g2_index, g_list):
     g1_index = math.ceil(g1_index[0])
@@ -444,9 +434,9 @@ size = int(sys.argv[2])
 tid = [4]
 trids = [[0], [0,1], [0,1,2], [0,1,2,3]]
 
-chunked_sessions = pickle.load(open(f'{data_path}/network_data/chunked_sessions/unbiased_seed_{seed}.pickle', 'rb'))
+chunked_sessions = pickle.load(open(f'./chunked_sessions/unbiased_seed_{seed}.pickle', 'rb'))
 
-# if os.path.isfile(f'{data_path}/network_data/chunk_ted_results/{seed}_{size}_{tid}_unbiased.pickle'):
+# if os.path.isfile(f'./chunk_ted_results/{seed}_{size}_{tid}_unbiased.pickle'):
 #     sys.exit("Already exists.")
 log_size, elapsed = [], []
 for trid in trids:
@@ -517,7 +507,7 @@ for trid in trids:
 
 pickle.dump(
     {'log_sizes':log_size, 'time':elapsed}, 
-    open(f'{data_path}/network_data/chunk_ted_results/{seed}_{size}_time.pickle', 'wb'), 
+    open(f'./chunk_ted_results/{seed}_{size}_time.pickle', 'wb'), 
     protocol=pickle.HIGHEST_PROTOCOL
 )
 

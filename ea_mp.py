@@ -36,7 +36,7 @@ from livelossplot import PlotLosses
 import optuna
 from optuna.trial import TrialState
 
-data_path = '/data/gpfs/projects/punim2258'
+
 
 # %%
 repo = Repository('./session_repositories/actions.tsv','./session_repositories/displays.tsv','./raw_datasets/')
@@ -44,19 +44,19 @@ repo = Repository('./session_repositories/actions.tsv','./session_repositories/d
 # %%
 device = torch.device('cuda')
 
-with open(f'{data_path}/network_data/edge/act_five_feats.pickle', 'rb') as fin:
+with open(f'./edge/act_five_feats.pickle', 'rb') as fin:
     act_feats = pickle.load(fin)
 
-with open(f'{data_path}/network_data/edge/col_action.pickle', 'rb') as fin:
+with open(f'./edge/col_action.pickle', 'rb') as fin:
     col_feats = pickle.load(fin)
 
-with open(f'{data_path}/network_data/edge/cond_action.pickle', 'rb') as fin:
+with open(f'./edge/cond_action.pickle', 'rb') as fin:
     cond_feats = pickle.load(fin)
 
-with open(f'{data_path}/network_data/display_feats/display_feats.pickle', 'rb') as fin:
+with open(f'./display_feats/display_feats.pickle', 'rb') as fin:
     display_feats = pickle.load(fin)
 
-with open(f'{data_path}/network_data/display_feats/display_pca_feats_{9999}.pickle', 'rb') as fin:
+with open(f'./display_feats/display_pca_feats_{9999}.pickle', 'rb') as fin:
     display_pca_feats = pickle.load(fin)
 
 actcol_feats = {}
@@ -684,7 +684,7 @@ seed = int(sys.argv[2])
 main_size = int(sys.argv[3])
 test_id = [int(sys.argv[4])]
 
-with open(f'{data_path}/network_data/chunked_sessions/unbiased_seed_{seed}.pickle', 'rb') as fin:
+with open(f'./chunked_sessions/unbiased_seed_{seed}.pickle', 'rb') as fin:
     chunked_sessions = pickle.load(fin)
 
 tar_feats = None
@@ -851,7 +851,7 @@ for _ in range(5):
         if test_ra3 > peak_ra3:
             pickle.dump(
                             dst_probs, 
-                            open(f'{data_path}/network_data/dst_probs/gine_own_{task}_best_ra3_{seed}_{test_id}_{main_size}.pickle', 'wb'), 
+                            open(f'./dst_probs/gine_own_{task}_best_ra3_{seed}_{test_id}_{main_size}.pickle', 'wb'), 
                             protocol=pickle.HIGHEST_PROTOCOL
                         )
             peak_ra3 = test_ra3
@@ -859,7 +859,7 @@ for _ in range(5):
         if test_mrr > peak_mrr:
             pickle.dump(
                             dst_probs, 
-                            open(f'{data_path}/network_data/dst_probs/gine_own_{task}_best_mrr_{seed}_{test_id}_{main_size}.pickle', 'wb'), 
+                            open(f'./dst_probs/gine_own_{task}_best_mrr_{seed}_{test_id}_{main_size}.pickle', 'wb'), 
                             protocol=pickle.HIGHEST_PROTOCOL
                         )
             peak_mrr = test_mrr
@@ -869,7 +869,7 @@ for _ in range(5):
     
 pickle.dump(
     results, 
-    open(f'{data_path}/network_data/model_stats/{task}_{seed}_{main_size}_{test_id}_gine_own.pickle', 'wb'), 
+    open(f'./model_stats/{task}_{seed}_{main_size}_{test_id}_gine_own.pickle', 'wb'), 
     protocol=pickle.HIGHEST_PROTOCOL
 )  
 
