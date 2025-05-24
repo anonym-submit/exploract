@@ -124,14 +124,13 @@ Where `{file_prefix}` is:
 ---
 
 ## 📁 Output
-
-- Accuracy results: from Jupyter notebooks  
-- Timing results: CLI output or logs  
+ 
+- Raw Results: `model_stats/` and `dst_probs` 
+- Results analysis: from Jupyter notebooks  
 - Plots: `time_plots/`
 
 ---
 
 ## 🔧 Notes
 
-- All models and scripts are set up to be reproducible with fixed seeds.
-- For detailed setup per model, refer to the comments inside the Python and notebook files.
+- As part of CIKM 2025 paper submission.
