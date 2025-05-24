@@ -1,6 +1,6 @@
-# ExplorAct Benchmarking and Evaluation
+# ExplorAct
 
-This repository provides benchmarking and evaluation tools for several session-based recommendation models, including GRU, GINE, REACT, EA-SP, EA-MP, EF-SP, and EF-MP. The setup uses Python 3.11.9 and includes code for accuracy computation, execution time measurement, and plotting.
+This repository provides implementation details and experiments for ExplorAct paper submission to CIKM 2025.
 
 ## 📦 Setup Instructions
 
